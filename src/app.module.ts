@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConditionalModule, ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import database from 'config/database';
+import database from 'config/database.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
