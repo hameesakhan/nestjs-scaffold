@@ -12,6 +12,7 @@ import { AppService } from './app.service';
         database
       ],
       isGlobal: true,
+      expandVariables: true,
     }),
     ConditionalModule.registerWhen(TypeOrmModule.forRoot({
       type: database().type,
