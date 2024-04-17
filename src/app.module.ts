@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import database from 'config/database.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DatabaseModule } from './database/database.module';
 import { User } from './user/user.entity';
 import { UserModule } from './user/user.module';
 
@@ -16,15 +16,15 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
       expandVariables: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root2',
-      password: 'password',
-      database: 'ncscrt',
+    DatabaseModule.forRoot({
+      type: database().type,
+      host: database().host,
+      port: database().port,
+      username: database().username,
+      password: database().password,
+      database: database().database,
       entities: [User],
-      synchronize: true,
+      synchronize: false,
     }),
     UserModule,
   ],

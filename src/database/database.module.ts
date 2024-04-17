@@ -1,9 +1,6 @@
 import { Global, Module } from '@nestjs/common';
-import { DatabaseService } from './database.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Global()
-@Module({
-    providers: [DatabaseService],
-    exports: [DatabaseService],
-})
-export class DatabaseModule { }
+@Module({})
+export class DatabaseModule extends TypeOrmModule { }
