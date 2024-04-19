@@ -1,6 +1,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { pbkdf2Sync, randomBytes } from 'crypto';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -10,7 +11,7 @@ import { User } from './user.entity';
 export class UserService {
     constructor(
         @InjectRepository(User)
-        private usersRepository: Repository<User>,
+        public usersRepository: Repository<User>,
     ) { }
 
     findAll(): Promise<User[]> {
@@ -18,6 +19,8 @@ export class UserService {
     }
 
     create(createUserDto: CreateUserDto) {
+        const salt = randomBytes(32).toString('hex');
+        createUserDto.password = salt + ':' + pbkdf2Sync(createUserDto.password, salt, 10000, 64, 'sha512').toString('hex')
         const u = this.usersRepository.create(createUserDto);
         return this.usersRepository.save(u);
     }
