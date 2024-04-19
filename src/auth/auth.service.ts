@@ -1,6 +1,6 @@
 import {
-    Injectable,
-    UnauthorizedException
+    ForbiddenException,
+    Injectable
 } from '@nestjs/common';
 
 import { ConfigService } from '@nestjs/config';
@@ -36,13 +36,13 @@ export class AuthService {
         // find the user by email
         const user = await this.userService.usersRepository.findOneBy({ email: dto.email });
         if (!user) {
-            throw new UnauthorizedException();
+            throw new ForbiddenException('Invalid credentials');
         }
 
         const [salt, passwordHash] = user.password.split(':');
 
         if (!timingSafeEqual(Buffer.from(passwordHash, 'hex'), pbkdf2Sync(dto.password, salt, 10000, 64, 'sha512'))) {
-            throw new UnauthorizedException();
+            throw new ForbiddenException('Invalid credentials');
         }
 
         return this.signToken(user.id, user.email);

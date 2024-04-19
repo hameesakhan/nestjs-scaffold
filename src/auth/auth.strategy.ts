@@ -30,6 +30,7 @@ export class JwtStrategy extends PassportStrategy(
     const user =
       await this.userService.usersRepository.findOneBy({
         id: payload.sub,
+        email: payload.email
       });
 
     return user;
