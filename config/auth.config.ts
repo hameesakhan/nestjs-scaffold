@@ -1,5 +1,7 @@
 export default () => ({
-    jwt: {
-        secret: process.env.JWT_SECRET,
+    auth: {
+        jwt: {
+            secret: process.env.JWT_SECRET,
+        }
     }
 });
