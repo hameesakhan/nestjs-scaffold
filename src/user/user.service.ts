@@ -29,8 +29,14 @@ export class UserService {
         return this.usersRepository.findOneBy({ id });
     }
 
-    update(id: number, updateUserDto: UpdateUserDto) {
-        return this.usersRepository.update(id, updateUserDto);
+    async update(id: number, updateUserDto: UpdateUserDto): Promise<User | null> {
+        if (updateUserDto?.password?.length) {
+            const salt = randomBytes(32).toString('hex');
+            updateUserDto.password = salt + ':' + pbkdf2Sync(updateUserDto.password, salt, 10000, 64, 'sha512').toString('hex')
+        }
+
+        await this.usersRepository.update(id, updateUserDto);
+        return this.usersRepository.findOneBy({ id });
     }
 
     async remove(id: number): Promise<void> {
