@@ -5,7 +5,7 @@ import {
 
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { pbkdf2Sync } from 'crypto';
+import { pbkdf2Sync, timingSafeEqual } from 'crypto';
 import { UserService } from 'src/user/user.service';
 import { LoginDto } from './login.dto';
 import { RegisterDto } from './register.dto';
@@ -41,7 +41,7 @@ export class AuthService {
 
         const [salt, passwordHash] = user.password.split(':');
 
-        if (passwordHash !== pbkdf2Sync(dto.password, salt, 10000, 64, 'sha512').toString('hex')) {
+        if (!timingSafeEqual(Buffer.from(passwordHash, 'hex'), pbkdf2Sync(dto.password, salt, 10000, 64, 'sha512'))) {
             throw new UnauthorizedException();
         }
 
