@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import auth from 'config/auth.config';
 import database from 'config/database.config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { DatabaseModule } from './database/database.module';
-import { User } from './user/user.entity';
-import { UserModule } from './user/user.module';
+import { AppController } from '../controllers/app.controller';
+import { AppService } from '../services/app.service';
+import { AuthModule } from './auth.module';
+import { DatabaseModule } from './database.module';
+import { User } from '../entities/user.entity';
+import { UserModule } from './user.module';
 
 @Module({
   imports: [

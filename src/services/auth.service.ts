@@ -6,9 +6,9 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { pbkdf2Sync, timingSafeEqual } from 'crypto';
-import { UserService } from 'src/user/user.service';
-import { LoginDto } from './login.dto';
-import { RegisterDto } from './register.dto';
+import { UserService } from './user.service';
+import { LoginDto } from '../dtos/login.dto';
+import { RegisterDto } from '../dtos/register.dto';
 
 @Injectable()
 export class AuthService {

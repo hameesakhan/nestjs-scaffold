@@ -5,10 +5,10 @@ import {
     HttpStatus,
     Post
 } from '@nestjs/common';
-import { Public } from 'src/public/public.decorator';
-import { AuthService } from './auth.service';
-import { LoginDto } from './login.dto';
-import { RegisterDto } from './register.dto';
+import { Public } from '../decorators/public.decorator';
+import { AuthService } from '../services/auth.service';
+import { LoginDto } from '../dtos/login.dto';
+import { RegisterDto } from '../dtos/register.dto';
 
 
 @Controller('auth')
